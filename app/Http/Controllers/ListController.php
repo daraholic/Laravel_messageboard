@@ -20,6 +20,21 @@ class ListController extends Controller
         
     }
 
+    public function add()
+    { 
+        return view("addmessage");
+        
+    }
+    
+    public function save(Request $request)
+    {
+        DB::table('messages')->insert([
+            'name' => $request->name,
+            'message' => $request->input('message')
+        ]);
+        return redirect('/messageboard');
+    }
+    
     /**
      * Show the form for creating a new resource.
      *

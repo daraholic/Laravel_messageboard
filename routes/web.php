@@ -18,3 +18,5 @@ use App\Http\Controllers\ListController;
 //     return 1;
 // });
 Route::get('/messageboard', [ListController::class, 'list']);
+Route::get('/add', [ListController::class, 'add']);
+Route::post('/post', [ListController::class, 'save']);

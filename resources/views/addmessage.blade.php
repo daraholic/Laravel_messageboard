@@ -7,12 +7,12 @@
     <title>Document</title>
 </head>
 <body>
-    @foreach ($lists as $list) 
-        <h1>{{$list->name}}</h1>
-        <h2>{{$list->message}}</h2>
-        <p>{{$list->time}}</p>
-    @endforeach
-
-    <button><a href="/add">add</a></button>
+    <h1>add</h1>
+    <form method="POST" action="/post">
+        @csrf
+        name:<input type="text" name="name">
+        message:<textarea name="message" id="" cols="30" rows="10"></textarea>
+        <button>OK</button>
+    </form>
 </body>
 </html>
