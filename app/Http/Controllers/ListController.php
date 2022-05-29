@@ -34,6 +34,13 @@ class ListController extends Controller
         ]);
         return redirect('/messageboard');
     }
+
+    public function delete($id)
+    {
+        DB::table('messages')->where('id',$id)->delete();
+        
+        return redirect('/messageboard');
+    }
     
     /**
      * Show the form for creating a new resource.

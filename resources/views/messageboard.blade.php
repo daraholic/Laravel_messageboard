@@ -11,7 +11,13 @@
         <h1>{{$list->name}}</h1>
         <h2>{{$list->message}}</h2>
         <p>{{$list->time}}</p>
+        <form action="/{{$list->id}}" method="POST">
+            @method('DELETE')
+            @csrf
+            <button>delete</button>
+        </form>
     @endforeach
+    
 
     <button><a href="/add">add</a></button>
 </body>
