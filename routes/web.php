@@ -1,6 +1,7 @@
 <?php
 
 use Illuminate\Support\Facades\Route;
+use App\Http\Controllers\ListController;
 
 /*
 |--------------------------------------------------------------------------
@@ -13,6 +14,7 @@ use Illuminate\Support\Facades\Route;
 |
 */
 
-Route::get('/messageboard', function () {
-    return 1;
-});
+// Route::get('/messageboard', function () {
+//     return 1;
+// });
+Route::get('/messageboard', [ListController::class, 'list']);
