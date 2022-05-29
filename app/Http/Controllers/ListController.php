@@ -30,7 +30,7 @@ class ListController extends Controller
     {
         DB::table('messages')->insert([
             'name' => $request->name,
-            'message' => $request->input('message')
+            'message' => $request->message,
         ]);
         return redirect('/messageboard');
     }
@@ -39,6 +39,19 @@ class ListController extends Controller
     {
         DB::table('messages')->where('id',$id)->delete();
         
+        return redirect('/messageboard');
+    }
+
+    public function edit($id)
+    {
+        $data=DB::table('messages')->where('id',$id)->get();
+        return view('editmessage', ['data' => $data]);
+    }
+
+    public function update(Request $request,$id)
+    {
+        DB::table('messages')->where('id',$id)
+        ->update(['name'=>$request->name,'message'=>$request->message]);
         return redirect('/messageboard');
     }
     
@@ -80,10 +93,10 @@ class ListController extends Controller
      * @param  int  $id
      * @return \Illuminate\Http\Response
      */
-    public function edit($id)
-    {
+    // public function edit($id)
+    // {
         //
-    }
+    // }
 
     /**
      * Update the specified resource in storage.
@@ -92,10 +105,10 @@ class ListController extends Controller
      * @param  int  $id
      * @return \Illuminate\Http\Response
      */
-    public function update(Request $request, $id)
-    {
+    // public function update(Request $request, $id)
+    // {
         //
-    }
+    // }
 
     /**
      * Remove the specified resource from storage.

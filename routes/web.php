@@ -21,3 +21,5 @@ Route::get('/messageboard', [ListController::class, 'list']);
 Route::get('/add', [ListController::class, 'add']);
 Route::post('/post', [ListController::class, 'save']);
 Route::delete('/{id}', [ListController::class, 'delete']);
+Route::post("/editmessage/{id}", [ListController::class,'edit']);
+Route::patch("/{id}", [ListController::class,'update']);

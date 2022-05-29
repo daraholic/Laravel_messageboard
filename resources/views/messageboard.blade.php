@@ -11,6 +11,11 @@
         <h1>{{$list->name}}</h1>
         <h2>{{$list->message}}</h2>
         <p>{{$list->time}}</p>
+        <form action="/editmessage/{{$list->id}}" method="POST">
+            {{-- @method('PATCH') --}}
+            @csrf
+            <button>edit</button>
+        </form>
         <form action="/{{$list->id}}" method="POST">
             @method('DELETE')
             @csrf
