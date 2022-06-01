@@ -1,24 +1,40 @@
 <?php
 
 namespace App\Http\Controllers;
-use Illuminate\Support\Facades\DB;
 
+use App\Services\MessageService;
 use Illuminate\Http\Request;
 
 class ListController extends Controller
 {
+    
+    private $message;
+
+    public function __construct(MessageService $messageService)
+    {
+        $this->message = $messageService;
+    }
     /**
      * Display a listing of the resource.
      *
      * @return \Illuminate\Http\Response
      */
-    public function list()
-    { 
-        $lists = DB::table('messages')->get();
 
+    public function list()
+    {
+        $lists=$this->message->getMessage();
         return view('messageboard', ['lists' => $lists]);
-        
+
     }
+
+    // original function
+    // public function list()
+    // { 
+        // $lists = DB::table('messages')->get();
+    //     $lists = Message::all();
+    //     return view('messageboard', ['lists' => $lists]);
+        
+    // }
 
     public function add()
     { 
@@ -28,30 +44,55 @@ class ListController extends Controller
     
     public function save(Request $request)
     {
-        DB::table('messages')->insert([
-            'name' => $request->name,
-            'message' => $request->message,
-        ]);
+        // DB::table('messages')->insert([
+        //     'name' => $request->name,
+        //     'message' => $request->message,
+        // ]);
+
+        // $message = new Message;
+        // 產生一個Message的instance
+        // $message->name = $request->name;
+        // $message->message = $request->message;
+        // $message->save();
+
+        // $message = Message::create([
+        //     'name'=>$request->name,
+        //     'message'=>$request->message,
+        // ]);
+        $this->message->addMessage($request);
         return redirect('/messageboard');
     }
 
     public function delete($id)
     {
-        DB::table('messages')->where('id',$id)->delete();
-        
+        // DB::table('messages')->where('id',$id)->delete();
+        // Message::destroy($id);
+        // 兩種方式（官網： delete)
+        $this->message->deleteMessage($id);
         return redirect('/messageboard');
     }
 
     public function edit($id)
     {
-        $data=DB::table('messages')->where('id',$id)->get();
+        // $data=DB::table('messages')->where('id',$id)->get();
+        // $data=Message::find($id);
+        $data=$this->message->getOne($id);
         return view('editmessage', ['data' => $data]);
     }
 
-    public function update(Request $request,$id)
+    public function update(Request $request)
     {
-        DB::table('messages')->where('id',$id)
-        ->update(['name'=>$request->name,'message'=>$request->message]);
+        // DB::table('messages')->where('id',$id) 
+        
+        // $message=Message::find($id);
+        // $message->name = $request->name;
+        // $message->message = $request->message;
+        // $message->save();
+        $this->message->updateMessage($request);
+
+        // ->update(['name'=>$request->name,'message'=>$request->message]);
+        
+    
         return redirect('/messageboard');
     }
     

@@ -1,7 +1,6 @@
 <?php
 
-use Illuminate\Support\Facades\Route;
-use App\Http\Controllers\ListController;
+// use Illuminate\Support\Facades\Route;
 
 /*
 |--------------------------------------------------------------------------
@@ -17,9 +16,16 @@ use App\Http\Controllers\ListController;
 // Route::get('/messageboard', function () {
 //     return 1;
 // });
-Route::get('/messageboard', [ListController::class, 'list']);
-Route::get('/add', [ListController::class, 'add']);
-Route::post('/post', [ListController::class, 'save']);
-Route::delete('/{id}', [ListController::class, 'delete']);
-Route::post("/editmessage/{id}", [ListController::class,'edit']);
-Route::patch("/{id}", [ListController::class,'update']);
+Route::get('/messageboard', 'ListController@list');
+Route::get('/add', 'ListController@add');
+Route::post('/post', 'ListController@save');
+Route::delete('/{id}', 'ListController@delete');
+Route::post("/editmessage/{id}", 'ListController@edit');
+Route::put("/{id}", 'ListController@update');
+
+// Route::get('/messageboard', [ListController::class, 'list']);
+// Route::get('/add', [ListController::class, 'add']);
+// Route::post('/post', [ListController::class, 'save']);
+// Route::delete('/{id}', [ListController::class, 'delete']);
+// Route::post("/editmessage/{id}", [ListController::class,'edit']);
+// Route::patch("/{id}", [ListController::class,'update']);

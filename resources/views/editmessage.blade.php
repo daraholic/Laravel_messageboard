@@ -7,13 +7,13 @@
     <title>Document</title>
 </head>
 <body>
-    @foreach ($data as $dat)
-    <form action="/{{$dat->id}}" method="POST">
-        @method('PATCH')
+    {{-- @foreach ($data as $dat) --}}
+    <form action="/{{$data->id}}" method="POST">
+        @method('PUT')
         @csrf
-    <input type="text" name="name" value="{{$dat->name}}">
-    <input type="text" name="message" value="{{$dat->message}}">
-    @endforeach
+    <input type="text" name="name" value="{{$data->name}}">
+    <input type="text" name="message" value="{{$data->message}}">
+    {{-- @endforeach --}}
     <button>OK</button>
 </form>
 </body>
