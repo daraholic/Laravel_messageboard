@@ -11,10 +11,4 @@ class Message extends Model
 
     public $timestamps = false;
     protected $fillable = ['name','message'];
-
-    public function list()
-    {
-      return Message::all();
-    }
-
 }

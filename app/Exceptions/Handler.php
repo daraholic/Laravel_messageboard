@@ -4,6 +4,8 @@ namespace App\Exceptions;
 
 use Illuminate\Foundation\Exceptions\Handler as ExceptionHandler;
 use Throwable;
+use Exception;
+use Illuminate\Validation\ValidationException;
 
 class Handler extends ExceptionHandler
 {
@@ -38,4 +40,9 @@ class Handler extends ExceptionHandler
             //
         });
     }
+
+    // public function render($request, Throwable $exception)
+    // {
+    //     if($exception instanceof ThrottleRequcep)
+    // }
 }

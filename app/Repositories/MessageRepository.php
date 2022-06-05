@@ -14,8 +14,7 @@ class MessageRepository
 
     public function getList()
     {
-        $lists = $this->message->list();
-        return $lists;
+        return $this->message->all();
     }
     
     public function addMessage($name,$message)

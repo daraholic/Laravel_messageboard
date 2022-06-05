@@ -2,7 +2,7 @@
 
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Route;
-
+use App\Http\Controllers\ListController;
 /*
 |--------------------------------------------------------------------------
 | API Routes
@@ -17,3 +17,21 @@ use Illuminate\Support\Facades\Route;
 Route::middleware('auth:sanctum')->get('/user', function (Request $request) {
     return $request->user();
 });
+
+Route::get('/greeting', function(){
+    return 'Hello World';
+});
+
+
+Route::get('/messageboard', 'ListController@list');
+Route::get('/add', 'ListController@add');
+Route::post('/post', 'ListController@save');
+Route::delete('/{id}', 'ListController@delete');
+Route::post('/editmessage/{id}', 'ListController@edit');
+Route::put('/{id}', 'ListController@update');
+
+// Route::put("/{id}", function($id){
+    // return $id;
+// });
+
+// Route::put("/{id}", [ListController::class,'update']);

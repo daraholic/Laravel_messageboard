@@ -38,7 +38,7 @@ class MessageService
         return $this->message->getOne($id);
     }
 
-    public function updateMessage($request)
+    public function updateMessage($request,$id)
     {
         $id=data_get($request,'id');
         $name = data_get($request,'name');

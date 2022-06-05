@@ -1,9 +1,14 @@
 <?php
 
 namespace App\Http\Controllers;
-
 use App\Services\MessageService;
+use Illuminate\Foundation\Validation\ValidatesRequests;
+use Exception;
+use Illuminate\Validation\ValidationException;
 use Illuminate\Http\Request;
+use SebastianBergmann\LinesOfCode\IllogicalValuesException;
+// use Illuminate\Validation\ValidationException;
+use Illuminate\Support\Facades\Validator;
 
 class ListController extends Controller
 {
@@ -44,6 +49,7 @@ class ListController extends Controller
     
     public function save(Request $request)
     {
+        // dd("111");
         // DB::table('messages')->insert([
         //     'name' => $request->name,
         //     'message' => $request->message,
@@ -59,8 +65,59 @@ class ListController extends Controller
         //     'name'=>$request->name,
         //     'message'=>$request->message,
         // ]);
+
+        // jojo way
+        // try {
+        //     $validated = $request->validate([
+        //         'name'=>'required|max:11',
+        //         'message'=>'required|max:300',
+        //     ]);
+        // } catch(ValidationException $e) {
+        //     // return redirect('/messageboard');
+        //     return "please input again.";
+        // }
+
+        // official way
+        $validator=Validator::make($request->all(), [
+            'name'=>'required|max:11',
+            'message'=>'required|max:11',
+        ]);
+        if ($validator->fails()) {
+            // return $validator->errors()->first();
+            // respose
+            return response()->json(['name'=>'1'],400);
+        }
+
+        // if($validator->fails()){
+        //     return validate();
+        // }
+
+        // costomizing the error messages
+        
+        // $validator = Validator::make($request->all(),$errors=[
+        //     'name'=>'required|max:3',
+        //     'message'=>'required|max:3',
+        // ],
+        // $errors=[
+        //     'required' => 'The name is required.',
+        //     'max' => 'name only 3 words',
+        //     'required'=>'The message is required.',
+        //     'max' => 'message onl 3 words',
+ 
+        // ]);
+        // $error=[
+            
+            // 'name.max'=>'plz input :attribute ',
+            // 'message'=>'plz input :attribute ',
+        // ];
+        // if($validator->fails()){
+        //     return $error;
+        // }
+        // dd($validated);
+        
         $this->message->addMessage($request);
         return redirect('/messageboard');
+        
     }
 
     public function delete($id)
@@ -80,20 +137,52 @@ class ListController extends Controller
         return view('editmessage', ['data' => $data]);
     }
 
-    public function update(Request $request)
+    public function update(Request $request,$id)
     {
+        // dd($id);
         // DB::table('messages')->where('id',$id) 
         
         // $message=Message::find($id);
         // $message->name = $request->name;
         // $message->message = $request->message;
         // $message->save();
-        $this->message->updateMessage($request);
+        // 目的：驗證
+        // 驗證id是否存在於db,傳id
+        //    name 不能重複 不可為空值 字數上限
+        //    message 不可為空值 字數上限
 
+        // dd($request->id);
+        // dd($request->name,$request->message);
+
+        // jojo way
+        // try {
+        //     $validated = $request->validate([
+        //         'id'=>'exists:messages',
+        //         'name'=>'required|unique:messages|max:11',
+        //         'message'=>'required|max:300',
+        //     ]);
+        // } catch(ValidationException $e) {
+        //     return redirect('/messageboard');
+        // }
+
+        
+        // official way
+        $validator = Validator::make($request->all(), [
+            'id'=>'exists:messages',
+            'name'=>'required|unique:messages|max:11',
+            'message'=>'required|max:300',
+        ]);
+        if ($validator->fails()) {
+            // return $validator->errors()->first();
+            return response()->json(['id'=>'do not exite'],400);
+        }
+
+        $this->message->updateMessage($request,$id);
+        // 
         // ->update(['name'=>$request->name,'message'=>$request->message]);
         
     
-        return redirect('/messageboard');
+        return redirect('/api/messageboard');
     }
     
     /**
